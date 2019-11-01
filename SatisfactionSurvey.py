@@ -1,6 +1,5 @@
 import sys
 
-
 rating_records = []
 
 
@@ -17,16 +16,31 @@ def start_message():
 
 
 def submit_rating():
+    global rating
+
     while True:
-        rating = int(input("Your rating (1-4)? "))
-        if 1 <= rating <= 4:
-            rating_records.append(rating)
+        try:
+            rating = int(input("Your rating (1-4)? "))
+
+            if 1 <= rating <= 4:
+                rating_records.append(rating)
+            else:
+                print("Printing our of bound...Please choose again!")
             break
+        except ValueError:
+            print("Please Choose a Whole Number")
+            continue
+
     return rating
 
 
 def view_ratings():
-    print(rating_records)
+    if len(rating_records) == 0:
+        print("There are no rating for this officer yet.")
+    else:
+        print("Highest Rating: ", max(rating_records))
+        print("Lowest Rating: ", min(rating_records))
+        print("Average Rating: ", round(sum(rating_records) / len(rating_records)))
 
 
 def reset_rating():
@@ -35,18 +49,20 @@ def reset_rating():
 
 
 def start_survey():
-    response = start_message()
+    choice = start_message()
 
-    if response == 0:
+    if choice == 0:
         sys.exit()
-    elif response == 1:
+    elif choice == 1:
         submit_rating()
-    elif response == 2:
+    elif choice == 2:
         view_ratings()
     else:
         reset_rating()
 
+    print()
+    # Calling the same method until choice == 0
+    start_survey()
 
-# start_survey()
 
-# print(rating_records)
+start_survey()
