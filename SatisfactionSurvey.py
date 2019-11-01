@@ -24,9 +24,10 @@ def submit_rating():
 
             if 1 <= rating <= 4:
                 rating_records.append(rating)
+                break
             else:
                 print("Printing our of bound...Please choose again!")
-            break
+            continue
         except ValueError:
             print("Please Choose a Whole Number")
             continue
